@@ -12,7 +12,12 @@ class EventDate extends Component{
 
     constructor(props) {
         super(props);
-        this.state = { chosenDate: new Date() };
+        const { params } = this.props.navigation.state;
+        const my_name = params ? params.event_name : null;
+        this.state = {
+            chosenDate: new Date(),
+            eventName:my_name
+        };
 
         this.setDate = this.setDate.bind(this);
     }
@@ -22,7 +27,7 @@ class EventDate extends Component{
     }
 
     _handlePress(){
-        this.props.navigation.navigate('ImagePicker');
+        this.props.navigation.navigate('ImagePicker',{event_n:this.state.eventName, eventD:this.state.chosenDate});
 
     }
 

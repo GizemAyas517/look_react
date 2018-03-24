@@ -15,6 +15,7 @@ import EventList from "./screens/EventList";
 import ImagePicker from "./screens/ImagePicker";
 import EventDate from "./screens/EventDate";
 import CameraRoll from "./screens/CameraRoll";
+import DisplayImage from "./screens/DisplayImage";
 
 
 const RootStack = StackNavigator(
@@ -36,7 +37,10 @@ const RootStack = StackNavigator(
         },
         CameraRoll:{
             screen: CameraRoll,
-        }
+        },
+        DisplayImage:{
+            screen: DisplayImage,
+        },
     },
     {
         initialRouteName: 'Home',
@@ -53,17 +57,6 @@ export default class App extends Component {
         }
 
     }
-
-    componentWillMount(){
-        this.fetchData();
-    }
-
-    fetchData = async() => {
-        const response = await fetch('https://facebook.github.io/react-native/movies.json');
-        const json = await response.json();
-        this.setState({data: json.movies});
-
-    };
 
 
     render() {

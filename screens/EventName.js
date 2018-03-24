@@ -8,10 +8,17 @@ const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
 
 class EventName extends Component{
 
+    constructor(props){
+        super(props);
+        this.state={
+            event_name:''
+        }
+    }
+
 
     _handleButton(){
 
-        this.props.navigation.navigate('ValidationList');
+        this.props.navigation.navigate('ValidationList',{event_n:this.state.event_name});
     }
 
 
@@ -21,7 +28,7 @@ class EventName extends Component{
                         <Form style={styles.container}>
                             <Item floatingLabel>
                                 <Label>Please enter event type</Label>
-                                <Input />
+                                <Input onChangeText={(text)=>this.setState({event_name:text})} />
                             </Item>
                             <Button block style={styles.button} onPress={() => this._handleButton()}>
                                 <Text style={{color:"#ffffff", opacity:1}}>

@@ -7,10 +7,21 @@ import AnimatedLinearGradient from "react-native-animated-linear-gradient";
 const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
 
 class ImagePicker extends Component{
+    constructor(props){
+        super(props);
+        const { params } = this.props.navigation.state;
+        const my_event = params ? params.event_n : null;
+        const my_date = params ? params.eventD : null;
+        this.state={
+            event_name:my_event,
+            event_date:my_date,
+
+        }
+    }
 
 
     _handleCameraRoll(){
-        this.props.navigation.navigate('CameraRoll')
+        this.props.navigation.navigate('CameraRoll',{event_n:this.state.event_name, event_d:this.state.event_date})
     }
 
     render(){
