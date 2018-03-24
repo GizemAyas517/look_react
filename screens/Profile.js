@@ -1,6 +1,3 @@
-/**
- * Created by gizemayas on 11.03.2018.
- */
 import React, {Component} from 'react'
 import {StyleSheet, View} from 'react-native'
 import MyFooterTab from "./MyFooterTab";
@@ -33,7 +30,7 @@ class Profile extends Component{
                         <EventList/>
                         <LookList/>
                     </Content>
-                    <MyFooterTab/>
+                    <MyFooterTab navigation={this.props.navigation}/>
                 </Container>
 
         );

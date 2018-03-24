@@ -8,6 +8,14 @@ import {List, ListItem} from "native-base";
 
 class EventList extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
+    _handleButton(){
+        this.props.navigation.navigate('ImagePicker')
+    }
+
     render(){
         return(
             <View>

@@ -10,7 +10,8 @@ class EventName extends Component{
 
 
     _handleButton(){
-        return <EventDate/>
+
+        this.props.navigation.navigate('ValidationList');
     }
 
 

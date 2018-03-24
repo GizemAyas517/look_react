@@ -17,15 +17,18 @@ class Answers extends Component{
         if (this.state.number < this.state.questions.length -1){
             this.setState({number:this.state.number+1})
         } else if (this.state.number == this.state.questions.length -1){
-            AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this._handleDone()},])
+            AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this.props.navigation.navigate('Profile')},])
         }
 
 
     }
 
+
     _handleDone(){
-        return (<Profile/>)
+        const { navigate } = this.props.navigation;
+        return navigate('Profile');
     }
+
 
     choice(id){
         return (<TouchableHighlight

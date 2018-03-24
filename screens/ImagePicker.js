@@ -7,6 +7,12 @@ import AnimatedLinearGradient from "react-native-animated-linear-gradient";
 const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
 
 class ImagePicker extends Component{
+
+
+    _handleCameraRoll(){
+        this.props.navigation.navigate('CameraRoll')
+    }
+
     render(){
         return (
             <AnimatedLinearGradient customColors={myColors} speed={4000} >
@@ -20,7 +26,7 @@ class ImagePicker extends Component{
                             Camera
                         </Text>
                     </Button>
-                    <Button style={styles.button}>
+                    <Button style={styles.button} onPress={()=>this._handleCameraRoll()}>
                         <Text>
                             Roll
                         </Text>

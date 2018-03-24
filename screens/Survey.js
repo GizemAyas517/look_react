@@ -36,6 +36,7 @@ class Survey extends Component{
             surveyState:'',
         }
 
+
     }
 
 
@@ -48,7 +49,9 @@ class Survey extends Component{
                 <Answers
                     questions={questions}
                     num={this.state.number}
+                    navigation={this.props.navigation}
                 />
+
             </AnimatedLinearGradient>
         );
     }

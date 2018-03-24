@@ -7,6 +7,7 @@ import {Button, Footer, Text, FooterTab,} from "native-base";
 import Validate from './Validate'
 import Suggest from './Suggest'
 import EventName from "./EventName";
+import ImagePicker from "./ImagePicker";
 
 
 class MyFooterTab extends Component{
@@ -19,12 +20,16 @@ class MyFooterTab extends Component{
     }
 
     _handleValidate(){
-        return <EventName/>
+        this.props.navigation.navigate('ValidationName')
     }
 
 
     _handleSuggestion(){
-        return <Suggest/>
+        this.props.navigation.navigate('Suggestion')
+    }
+
+    _handleWardrobe(){
+        this.props.navigation.navigate('ImagePicker')
     }
 
 
@@ -35,6 +40,9 @@ class MyFooterTab extends Component{
                 <FooterTab>
                     <Button onPress={()=> this._handleValidate()}>
                         <Text>Validate</Text>
+                    </Button>
+                    <Button onPress={()=> this._handleWardrobe()}>
+                        <Text>My Wardrobe</Text>
                     </Button>
                     <Button onPress={()=> this._handleSuggestion()}>
                         <Text>Suggest Look</Text>

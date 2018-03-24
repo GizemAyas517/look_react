@@ -22,7 +22,8 @@ class EventDate extends Component{
     }
 
     _handlePress(){
-        return <ImagePicker/>
+        this.props.navigation.navigate('ImagePicker');
+
     }
 
     render() {
