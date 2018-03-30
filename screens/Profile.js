@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native'
 import MyFooterTab from "./MyFooterTab";
 import EventList from "./EventList"
 import LookList from './LookList'
-import {Container, Content, Header, Text} from "native-base";
+import {Container, Content, Text} from "native-base";
 
 
 class Profile extends Component{
@@ -14,8 +14,26 @@ class Profile extends Component{
             name:'',
             events:'',
             looks:'',
+            event_list:null,
 
         }
+    }
+
+    componentWillMount(){
+        return fetch('http://188.166.114.155:8000/validations/')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    event_list: responseJson.results,
+                }, function(){
+
+                });
+
+            })
+            .catch((error) =>{
+                console.error(error);
+            });
+
     }
 
     render(){
@@ -27,8 +45,7 @@ class Profile extends Component{
                         <Text>
                             Alice Westbrook
                         </Text>
-                        <EventList/>
-                        <LookList/>
+                        <EventList list={this.state.event_list}/>
                     </Content>
                     <MyFooterTab navigation={this.props.navigation}/>
                 </Container>

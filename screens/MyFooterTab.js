@@ -19,6 +19,7 @@ class MyFooterTab extends Component{
         }
     }
 
+
     _handleValidate(){
         this.props.navigation.navigate('ValidationName')
     }

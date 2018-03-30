@@ -3,7 +3,6 @@ import {View, StyleSheet} from "react-native";
 import {Button, Text} from "native-base";
 import AnimatedLinearGradient from "react-native-animated-linear-gradient";
 
-
 const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
 
 class ImagePicker extends Component{

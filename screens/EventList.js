@@ -1,8 +1,5 @@
-/**
- * Created by gizemayas on 11.03.2018.
- */
 import React,{Component} from 'react'
-import {FlatList, Text, View, StyleSheet, Button, TouchableHighlight} from "react-native";
+import {FlatList, Text, View, StyleSheet, Button, TouchableHighlight, TouchableOpacity} from "react-native";
 import {List, ListItem} from "native-base";
 
 
@@ -10,11 +7,25 @@ class EventList extends Component {
 
     constructor(props){
         super(props);
+        this.state={
+            event_list:this.props.list,
+        }
     }
 
     _handleButton(){
         this.props.navigation.navigate('ImagePicker')
     }
+
+
+
+    render_item = ({item}) => (
+        <TouchableOpacity style={styles.list_button}>
+            <Text style={styles.list_text}>{item.event_type}</Text>
+        </TouchableOpacity>
+    );
+
+
+
 
     render(){
         return(
@@ -22,29 +33,7 @@ class EventList extends Component {
                 <Text style={styles.title}>
                     Events
                 </Text>
-                <FlatList>
-                    <ListItem>
-                    <TouchableHighlight style={styles.button}>
-                        <Text>
-                            Bir
-                        </Text>
-                    </TouchableHighlight>
-                    </ListItem>
-                    <ListItem>
-                    <TouchableHighlight style={styles.button}>
-                        <Text>
-                            Bir
-                        </Text>
-                    </TouchableHighlight>
-                    </ListItem>
-                    <ListItem>
-                    <TouchableHighlight style={styles.button}>
-                        <Text>
-                            Bir
-                        </Text>
-                    </TouchableHighlight>
-                    </ListItem>
-                </FlatList>
+                <FlatList data={this.state.event_list} renderItem={this.render_item}/>
 
             </View>
         );
@@ -64,6 +53,15 @@ const styles= StyleSheet.create(
         button:{
             opacity:0.5,
             backgroundColor:"#DDDDDD"
+        },
+        list_button:{
+            alignItems: 'center',
+            backgroundColor: '#DDDDDD',
+            padding: 10
+
+        },
+        list_text:{
+            color:"#ffffff"
         }
     }
 );

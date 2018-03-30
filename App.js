@@ -44,7 +44,12 @@ const RootStack = StackNavigator(
     },
     {
         initialRouteName: 'Home',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
     }
+
 );
 
 

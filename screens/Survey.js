@@ -42,8 +42,8 @@ class Survey extends Component{
 
 
 
+
     render(){
-        console.log('render called');
         return(
             <AnimatedLinearGradient customColors={presetColors.instagram} speed={4000}>
                 <Answers

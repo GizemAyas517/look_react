@@ -31,6 +31,7 @@ class EventName extends Component{
                                 <Input onChangeText={(text)=>this.setState({event_name:text})} />
                             </Item>
                             <Button block style={styles.button} onPress={() => this._handleButton()}>
+
                                 <Text style={{color:"#ffffff", opacity:1}}>
                                     Next
                                 </Text>

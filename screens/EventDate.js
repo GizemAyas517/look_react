@@ -13,7 +13,7 @@ class EventDate extends Component{
     constructor(props) {
         super(props);
         const { params } = this.props.navigation.state;
-        const my_name = params ? params.event_name : null;
+        const my_name = params ? params.event_n : null;
         this.state = {
             chosenDate: new Date(),
             eventName:my_name
@@ -34,12 +34,14 @@ class EventDate extends Component{
     render() {
         return (
             <AnimatedLinearGradient customColors={myColors} speed={4000}>
+                <Text>{this.state.eventName}</Text>
             <View style={styles.container}>
                 <DatePickerIOS
                     date={this.state.chosenDate}
                     onDateChange={this.setDate}
                 />
             </View>
+
                 <Button block onPress={() => this._handlePress()}>
                     <Text>
                         Next
