@@ -50,7 +50,7 @@ class DisplayImage extends Component{
             });
 
 
-            let x = await fetch('http://188.166.114.155:8000/validations/', {
+            let x = await fetch('http://looktheapp.com/validations/', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

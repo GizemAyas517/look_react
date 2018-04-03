@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
-import {Text, View, TouchableHighlight, StyleSheet, AlertIOS} from 'react-native'
+import {Text, View, TouchableHighlight, StyleSheet, AlertIOS, Image, ScrollView} from 'react-native'
 import Profile from './Profile'
+import Carousel from 'react-native-carousel';
+import {Button} from "native-base";
 
 
 
@@ -8,52 +10,110 @@ class Answers extends Component{
     constructor(props){
         super(props);
         this.state={
-            questions:props.questions,
-            number:props.num,
+            question_text:'',
+            choice_1_uri:'',
+            choice_2_uri:'',
+            choice_3_uri:'',
+            choice_4_uri:'',
+            number:0,
+
         }
     }
 
-    _handleQuestion(){
-        if (this.state.number < this.state.questions.length -1){
-            this.setState({number:this.state.number+1})
-        } else if (this.state.number == this.state.questions.length -1){
-            AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this.props.navigation.navigate('Profile')},])
-        }
+   handleQuestion = () => {
+            if (this.state.number < 4){
+                this.setState({number: this.state.number+1});
+                this.componentWillMount();
+            } else if (this.state.number == 4){
+             AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this.props.navigation.navigate('Profile')},])
+             }
+    };
 
-
-    }
 
 
     _handleDone(){
-        const { navigate } = this.props.navigation;
+       const { navigate } = this.props.navigation;
         return navigate('Profile');
     }
 
 
-    choice(id){
-        return (<TouchableHighlight
-            style={styles.button}
-            onPress={()=>this._handleQuestion()}
-        >
-            <Text style={styles.answer}>
-                {this.state.questions[this.state.number]["ans" + (id + 1)]}
-            </Text>
-        </TouchableHighlight>)
+    componentWillMount() {
+        this.getData()
+            .then((data) => {
+                this.setState({
+                    choice_1_uri: data.results[this.state.number].option_1.answer_image,
+                    choice_2_uri: data.results[this.state.number].option_2.answer_image,
+                    choice_3_uri: data.results[this.state.number].option_3.answer_image,
+                    choice_4_uri: data.results[this.state.number].option_4.answer_image,
+                    question_text: data.results[this.state.number].text,
+                });
+
+            }).catch((error)=>{
+            console.log("Api call error");
+            alert(error.message);
+            });
+
+
+
+
     }
 
+
+    async getData() {
+        const response = await fetch("https://looktheapp.com/questions/", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).catch(function(error) {
+            throw error
+        });
+        const json = await response.json();
+        return json;
+    }
+
+    question(){
+        return (
+            <Text style={styles.question}>
+                {this.state.question_text}
+            </Text>
+        );
+    }
+
+
+
+
+
     render(){
+
         return(
-            <View>
-                <Text style={styles.question}>
-                    {this.state.questions[this.state.number].question}
-                </Text>
+            <ScrollView>
 
-                {this.choice(0)}
-                {this.choice(1)}
-                {this.choice(2)}
-                {this.choice(3)}
+                {this.question()}
 
-            </View>
+                <Carousel width={375} animate={false}>
+                    <View style={styles.container}>
+                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_1_uri.replace("http","https")}}/>
+                    </View>
+                    <View style={styles.container}>
+                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_2_uri.replace("http","https")}}/>
+                    </View>
+                    <View style={styles.container}>
+                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_3_uri.replace("http","https")}}/>
+                    </View>
+                    <View style={styles.container}>
+                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_4_uri.replace("http","https")}}/>
+                    </View>
+                </Carousel>
+                */
+                <Button onPress={this.handleQuestion}>
+                    <Text>
+                        Next
+                    </Text>
+                </Button>
+
+            </ScrollView>
         );
 
     }
@@ -82,12 +142,19 @@ const styles =StyleSheet.create(
 
         question:{
             marginBottom: 50,
-            marginTop:200,
+            marginTop:30,
             marginLeft:30,
             marginRight:30,
             fontSize:20,
             color:'white',
-        }
+        },
+        container: {
+            width: 375,
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor:'transparent',
+        },
 
     }
 );

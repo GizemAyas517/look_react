@@ -11,11 +11,11 @@ import { StackNavigator } from 'react-navigation';
 import Survey from "./screens/Survey";
 import Profile from "./screens/Profile";
 import EventName from "./screens/EventName";
-import EventList from "./screens/EventList";
 import ImagePicker from "./screens/ImagePicker";
 import EventDate from "./screens/EventDate";
 import CameraRoll from "./screens/CameraRoll";
 import DisplayImage from "./screens/DisplayImage";
+import Wardrobe from "./screens/Wardrobe";
 
 
 const RootStack = StackNavigator(
@@ -41,6 +41,9 @@ const RootStack = StackNavigator(
         DisplayImage:{
             screen: DisplayImage,
         },
+        Wardrobe:{
+            screen: Wardrobe,
+        }
     },
     {
         initialRouteName: 'Home',

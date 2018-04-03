@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {FlatList, Text, View, StyleSheet, Button, TouchableHighlight, TouchableOpacity} from "react-native";
-import {List, ListItem} from "native-base";
+
 
 
 class EventList extends Component {
