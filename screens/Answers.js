@@ -92,7 +92,7 @@ class Answers extends Component{
 
                 {this.question()}
 
-                <Carousel width={375} animate={false}>
+                <Carousel indicatorOffset={-40} indicatorAtBottom={true} width={375} animate={false}>
                     <View style={styles.container}>
                         <Image style={{height:400, width:300}} source={{uri:this.state.choice_1_uri.replace("http","https")}}/>
                     </View>
@@ -107,7 +107,7 @@ class Answers extends Component{
                     </View>
                 </Carousel>
                 */
-                <Button onPress={this.handleQuestion}>
+                <Button  style={styles.button} block onPress={this.handleQuestion}>
                     <Text>
                         Next
                     </Text>
@@ -123,7 +123,7 @@ class Answers extends Component{
 const styles =StyleSheet.create(
     {
         button:{
-            margin: 10,
+            marginTop: 30,
             opacity:0.7,
             alignItems: 'center',
             backgroundColor: '#DDDDDD',
