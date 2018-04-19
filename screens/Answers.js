@@ -3,6 +3,7 @@ import {Text, View, TouchableHighlight, StyleSheet, AlertIOS, Image, ScrollView}
 import Profile from './Profile'
 import Carousel from 'react-native-carousel';
 import {Button} from "native-base";
+import ModalDropdown from 'react-native-modal-dropdown';
 
 
 
@@ -15,27 +16,52 @@ class Answers extends Component{
             choice_2_uri:'',
             choice_3_uri:'',
             choice_4_uri:'',
+            id:"",
             number:0,
+            radius:0,
+            select:'',
 
         }
     }
 
-   handleQuestion = () => {
-            if (this.state.number < 4){
-                this.setState({number: this.state.number+1});
-                this.componentWillMount();
-            } else if (this.state.number == 4){
-             AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this.props.navigation.navigate('Profile')},])
-             }
+    handleQuestion = () => {
+
+        if (this.state.number < 4){
+            this.setState({number: this.state.number+1});
+            this.componentWillMount();
+        } else if (this.state.number == 4){
+            AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this.props.navigation.navigate('Profile')},])
+        }
     };
 
 
 
-    _handleDone(){
-       const { navigate } = this.props.navigation;
-        return navigate('Profile');
+    blur(value){
+        this.setState({radius:1, select:value})
     }
 
+    fetchData = async(selected)=>{
+
+        const data = new FormData();
+        data.append("question", this.state.id);
+        data.append("user", 1);
+        data.append("chosen_option", selected);
+        let x = await fetch('https://looktheapp.com/answers/', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                "Content-Type": 'application/json',
+            },
+            body: data
+        }).then(res => res.json());
+    };
+
+
+    _handleDone(value){
+        this.fetchData(value);
+        const { navigate } = this.props.navigation;
+        return navigate('Profile');
+    }
 
     componentWillMount() {
         this.getData()
@@ -45,6 +71,7 @@ class Answers extends Component{
                     choice_2_uri: data.results[this.state.number].option_2.answer_image,
                     choice_3_uri: data.results[this.state.number].option_3.answer_image,
                     choice_4_uri: data.results[this.state.number].option_4.answer_image,
+                    id: data.results[this.state.number].id,
                     question_text: data.results[this.state.number].text,
                 });
 
@@ -53,11 +80,7 @@ class Answers extends Component{
             alert(error.message);
             });
 
-
-
-
     }
-
 
     async getData() {
         const response = await fetch("https://looktheapp.com/questions/", {
@@ -87,51 +110,67 @@ class Answers extends Component{
 
     render(){
 
+
         return(
-            <ScrollView>
+                <View>
 
-                {this.question()}
+                    <View style={styles.survey}>
+                        {this.question()}
 
-                <Carousel indicatorOffset={-40} indicatorAtBottom={true} width={375} animate={false}>
-                    <View style={styles.container}>
-                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_1_uri.replace("http","https")}}/>
+                        <View style={{flexDirection:'row'}}>
+
+                            <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(1)}>
+                                <Image blurRadius={this.state.radius} style={styles.image} source={{uri:this.state.choice_1_uri.replace("http","https")}}/>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(2)}>
+                                <Image style={styles.image} source={{uri:this.state.choice_2_uri.replace("http","https")}}/>
+                            </TouchableHighlight>
+
+                        </View>
+
+                        <View style={{flexDirection:'row'}}>
+
+                            <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(3)}>
+                                <Image style={styles.image} source={{uri:this.state.choice_3_uri.replace("http","https")}}/>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(4)}>
+                                <Image style={styles.image} source={{uri:this.state.choice_4_uri.replace("http","https")}}/>
+                            </TouchableHighlight>
+
+                        </View>
                     </View>
-                    <View style={styles.container}>
-                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_2_uri.replace("http","https")}}/>
-                    </View>
-                    <View style={styles.container}>
-                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_3_uri.replace("http","https")}}/>
-                    </View>
-                    <View style={styles.container}>
-                        <Image style={{height:400, width:300}} source={{uri:this.state.choice_4_uri.replace("http","https")}}/>
-                    </View>
-                </Carousel>
-                */
-                <Button  style={styles.button} block onPress={this.handleQuestion}>
-                    <Text>
+
+                <Button style={styles.button} onPress={this.handleQuestion}>
+                    <Text style={{color:"#000000"}}>
                         Next
                     </Text>
                 </Button>
-
-            </ScrollView>
+        </View>
         );
 
     }
 
 }
 
+
 const styles =StyleSheet.create(
     {
         button:{
-            marginTop: 30,
-            opacity:0.7,
-            alignItems: 'center',
-            backgroundColor: '#DDDDDD',
+            marginTop: 40,
+            alignSelf: 'center',
+            backgroundColor: '#ffffff',
             padding:15,
-            borderRadius:50,
+            borderRadius:100,
             borderColor:"white",
             borderStyle:'solid',
-            borderWidth:3
+            borderWidth:3,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.8,
+            shadowRadius: 2,
+
 
         },
 
@@ -141,10 +180,9 @@ const styles =StyleSheet.create(
         },
 
         question:{
-            marginBottom: 50,
-            marginTop:30,
-            marginLeft:30,
-            marginRight:30,
+            marginBottom: 10,
+            marginTop:60,
+            alignSelf: 'center',
             fontSize:20,
             color:'white',
         },
@@ -155,6 +193,17 @@ const styles =StyleSheet.create(
             alignItems: 'center',
             backgroundColor:'transparent',
         },
+        image:{
+            height:170,
+            width:130
+        },
+        highlight:{
+            margin:20,
+
+        },
+        survey:{
+            alignSelf: 'center',
+        }
 
     }
 );

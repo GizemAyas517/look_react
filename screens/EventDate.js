@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {DatePickerIOS, View, StyleSheet} from "react-native";
+import {DatePickerIOS, View, StyleSheet, ImageBackground, Image} from "react-native";
 import AnimatedLinearGradient,{presetColors} from "react-native-animated-linear-gradient";
 import {Button, Text} from "native-base";
 import ImagePicker from "./ImagePicker";
@@ -26,28 +26,31 @@ class EventDate extends Component{
         this.setState({chosenDate: newDate})
     }
 
-    _handlePress(){
-        this.props.navigation.navigate('ImagePicker',{event_n:this.state.eventName, eventD:this.state.chosenDate});
-
-    }
-
     render() {
         return (
-            <AnimatedLinearGradient customColors={myColors} speed={4000}>
-                <Text>{this.state.eventName}</Text>
-            <View style={styles.container}>
-                <DatePickerIOS
+            <ImageBackground
+                style={{
+                flex: 1,
+                alignSelf: 'stretch',
+                width: null,
+                }}
+                source={require('./backgroundvalidate.png')}
+                >
+            <Image style={styles.icon} source={require('./calendar.png')} />
+            <Text style={styles.title}>Please pick the event date</Text>
+            <DatePickerIOS
                     date={this.state.chosenDate}
                     onDateChange={this.setDate}
-                />
-            </View>
+            />
 
-                <Button block onPress={() => this._handlePress()}>
+
+            <Button style={styles.button} onPress={() => this.props.navigation.navigate('ImagePicker',{event_n:this.state.eventName, eventD:this.state.chosenDate})}>
                     <Text>
                         Next
                     </Text>
-                </Button>
-            </AnimatedLinearGradient>
+            </Button>
+            </ImageBackground>
+
         )
     }
 
@@ -57,6 +60,28 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center'
+    },
+    button:{
+        position: 'absolute',
+        backgroundColor:"#DB3069",
+        borderRadius:100,
+        bottom:10,
+        right:10,
+
+    },
+    title:{
+        color:"#fff",
+        fontSize:20,
+        fontFamily:"Arial",
+        marginLeft:80,
+
+    },
+    icon:{
+        width:50,
+        height:50,
+        marginTop:150,
+        marginLeft:165,
+        marginBottom:30,
     },
 
 });

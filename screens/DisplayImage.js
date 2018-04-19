@@ -39,9 +39,8 @@ class DisplayImage extends Component{
 
             const data = new FormData();
             data.append("feedback", true);
-            data.append("event_date", 'this is date');
-            data.append("outfit", this.state.outfit.uri);
-            data.append("event_type", this.state.event_name);
+            data.append("event_date", "2018-04-07T12:12:00Z");
+            data.append("event_type", 1);
             data.append("user", 1);
             data.append('outfit_image', {
                 uri: this.state.outfit.uri,
@@ -50,7 +49,7 @@ class DisplayImage extends Component{
             });
 
 
-            let x = await fetch('http://looktheapp.com/validations/', {
+            let x = await fetch('https://looktheapp.com/validations/', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

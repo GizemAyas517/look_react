@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, ImageBackground, Image} from "react-native";
 import {Button, Text} from "native-base";
-import AnimatedLinearGradient from "react-native-animated-linear-gradient";
 
-const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
+
 
 class ImagePicker extends Component{
     constructor(props){
@@ -25,26 +24,41 @@ class ImagePicker extends Component{
 
     render(){
         return (
-            <AnimatedLinearGradient customColors={myColors} speed={4000} >
-                <View style={styles.container}>
-                <Text>
-                    Let's see your outfit
-                </Text>
-                <View style={{flexDirection:'row'}}>
-                    <Button style={styles.button}>
-                        <Text>
-                            Camera
-                        </Text>
-                    </Button>
-                    <Button style={styles.button} onPress={()=>this._handleCameraRoll()}>
-                        <Text>
-                            Roll
-                        </Text>
-                    </Button>
-                </View>
+            <ImageBackground
 
+                style={{
+                flex: 1,
+                alignSelf: 'stretch',
+                width: null,
+
+                }}
+
+                source={require('./backgroundvalidate.png')}>
+
+                <Text style={styles.title}>
+                    Please upload your outfit for the event
+                </Text>
+                <View style={styles.container}>
+                <View style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'column', margin:20}}>
+                        <Image style={styles.icon} source={require('./picture.png')}/>
+                        <Button style={styles.button}>
+                            <Text style={{color:"#000"}}>
+                                Roll
+                            </Text>
+                        </Button>
+                    </View>
+                    <View style={{flexDirection:'column', margin:20}}>
+                        <Image style={styles.icon} source={require('./photo-camera.png')}/>
+                        <Button style={styles.button} onPress={()=>this._handleCameraRoll()}>
+                            <Text style={{color:"#000"}}>
+                                Camera
+                            </Text>
+                        </Button>
+                    </View>
                 </View>
-            </AnimatedLinearGradient>
+                </View>
+            </ImageBackground>
 
         );
     }
@@ -54,19 +68,27 @@ class ImagePicker extends Component{
 
 const styles= StyleSheet.create(
     {
-        buttonContainer:{
-            flexDirection:'row'
-        },
-
-        container: {
-            flex:1,
-            justifyContent:'center',
-            alignItems:'center'
-
+        container:{
+          marginTop:50,
+          marginLeft:80
         },
         button: {
-            margin:30
-        }
+            backgroundColor:"#fff",
+
+        },
+        icon:{
+            width:50,
+            height:50,
+            margin:10
+        },
+        title:{
+            color:"#fff",
+            fontSize:20,
+            fontFamily:"Arial",
+            marginLeft:50,
+            marginTop:80
+
+        },
     }
 );
 

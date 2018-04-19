@@ -16,6 +16,7 @@ import EventDate from "./screens/EventDate";
 import CameraRoll from "./screens/CameraRoll";
 import DisplayImage from "./screens/DisplayImage";
 import Wardrobe from "./screens/Wardrobe";
+import SuggestEventName from "./screens/Suggest";
 
 
 const RootStack = StackNavigator(
@@ -43,10 +44,13 @@ const RootStack = StackNavigator(
         },
         Wardrobe:{
             screen: Wardrobe,
+        },
+        SuggestEvent:{
+            screen: SuggestEventName,
         }
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Profile',
         headerMode: 'none',
         navigationOptions: {
             headerVisible: false,
