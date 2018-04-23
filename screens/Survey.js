@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import AnimatedLinearGradient, {presetColors} from 'react-native-animated-linear-gradient'
 import Answers from "./Answers";
 import {ImageBackground} from "react-native";
 
@@ -15,10 +14,6 @@ class Survey extends Component{
 
 
     }
-    /*
-     <AnimatedLinearGradient customColors={presetColors.instagram} speed={4000}>
-     </AnimatedLinearGradient>
-     */
 
 
     render(){

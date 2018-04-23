@@ -26,7 +26,7 @@ class MyFooterTab extends Component{
 
 
     _handleSuggestion(){
-        this.props.navigation.navigate('SuggestEventName')
+        this.props.navigation.navigate('SuggestEvent')
     }
 
     _handleWardrobe(){

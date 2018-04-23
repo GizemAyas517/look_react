@@ -1,6 +1,19 @@
 import React, {Component} from 'react'
-import {ImageBackground, Text} from "react-native";
+import {ImageBackground, Text,StyleSheet} from "react-native";
 import SwipeCards from 'react-native-swipe-cards';
+import Card from "./Card";
+import NoMoreCards from "./NoMoreCards";
+
+const cards = [
+    {name: '1', image: 'https://looktheapp.com/media/72._mg_6801_900x.jpg'},
+    {name: '2', image: 'https://looktheapp.com/media/46._8ec2c1bf34eb942c8509910a3ab5c137.jpg'},
+    {name: '3', image: 'https://looktheapp.com/media/44._set-3162rm8c-10885530-eggplant.jpg'},
+];
+
+const cards2 = [
+    {name: '3', image: 'https://looktheapp.com/media/44._set-3162rm8c-10885530-eggplant.jpg'},
+];
+
 
  class Suggest extends Component{
 
@@ -26,10 +39,8 @@ import SwipeCards from 'react-native-swipe-cards';
          let CARD_REFRESH_LIMIT = 3;
 
          if (this.state.cards.length - index <= CARD_REFRESH_LIMIT + 1) {
-             console.log(`There are only ${this.state.cards.length - index - 1} cards left.`);
 
              if (!this.state.outOfCards) {
-                 console.log(`Adding ${cards2.length} more cards`);
 
                  this.setState({
                      cards: this.state.cards.concat(cards2),
@@ -50,8 +61,8 @@ import SwipeCards from 'react-native-swipe-cards';
                 width: null,
 
             }}
-            source={require('./backgroundvalidate.png')}>
-            <Text>Here are some suggestions for you</Text>
+            source={require('./backgroundsuggest.png')}>
+            <Text style={styles.title}>Here are some suggestions for you</Text>
             <SwipeCards
                 cards={this.state.cards}
                 loop={false}
@@ -71,6 +82,15 @@ import SwipeCards from 'react-native-swipe-cards';
 
     }
  }
+
+ const styles = StyleSheet.create({
+     title:{
+         alignSelf:'center',
+         marginTop:30,
+         color:"#ffffff",
+         fontSize:15
+     }
+ });
 
 
  export default Suggest; 

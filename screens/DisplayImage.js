@@ -23,9 +23,7 @@ class DisplayImage extends Component{
     }
 
     generate_picture_id(){
-
         return this.state.image_count;
-
     }
 
 
@@ -44,7 +42,7 @@ class DisplayImage extends Component{
             data.append("user", 1);
             data.append('outfit_image', {
                 uri: this.state.outfit.uri,
-                type: 'image/jpeg', // or photo.type
+                type: 'image/jpeg',
                 name: this.generate_picture_id() + "_" + ".jpg"
             });
 
@@ -52,11 +50,11 @@ class DisplayImage extends Component{
             let x = await fetch('https://looktheapp.com/validations/', {
                 method: 'POST',
                 headers: {
-                    Accept: 'application/json',
                     "Content-Type": 'application/json',
                 },
                 body: data
             }).then(res => res.json());
+
 
 
     };

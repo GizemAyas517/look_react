@@ -16,7 +16,8 @@ import EventDate from "./screens/EventDate";
 import CameraRoll from "./screens/CameraRoll";
 import DisplayImage from "./screens/DisplayImage";
 import Wardrobe from "./screens/Wardrobe";
-import SuggestEventName from "./screens/Suggest";
+import SuggestEventName from "./screens/SuggestEventName";
+import Suggest from "./screens/Suggest";
 
 
 const RootStack = StackNavigator(
@@ -47,6 +48,9 @@ const RootStack = StackNavigator(
         },
         SuggestEvent:{
             screen: SuggestEventName,
+        },
+        Suggest:{
+            screen: Suggest,
         }
     },
     {
