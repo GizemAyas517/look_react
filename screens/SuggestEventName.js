@@ -13,6 +13,9 @@ class SuggestEventName extends Component{
         }
     }
 
+    updateUser = (value) => {
+        this.setState({chosen:value})
+    };
 
 
 
@@ -24,7 +27,7 @@ class SuggestEventName extends Component{
                     this.setState({options: joined});
 
                 }
-
+                this.setState({chosen:this.state.options[0]})
             }).catch((error)=>{
             console.log("Api call error");
             alert(error.message);
@@ -46,17 +49,6 @@ class SuggestEventName extends Component{
         return json;
     }
 
-    updateUser = (value) => {
-        this.setState({chosen:value})
-    };
-
-
-    /*
-
-
-
-     */
-
 
 
     render(){
@@ -72,7 +64,7 @@ class SuggestEventName extends Component{
 
                 <Image style={styles.icon} source={require('./invitation.png')} />
                 <Text style={styles.title}>Please pick a event type</Text>
-                <Picker selectedValue = {this.state.user} onValueChange = {this.updateUser}>
+                <Picker selectedValue = {this.state.chosen} onValueChange = {this.updateUser}>
                     {this.state.options.map((i,index) =>
                         (<Picker.Item key={index} label={i} value={i} />)
                     )}

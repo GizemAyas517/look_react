@@ -64,7 +64,12 @@ class DisplayImage extends Component{
         <ScrollView>
             <Image style={{width:400, height:600}} source={{uri:this.state.outfit.uri}}/>
             <Button onPress={()=>this.fetchData()}>
-                <Text>Send request</Text>
+                <Text>Send outfit to look</Text>
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate("ValidateAnswer", {event_n:this.state.event_name})}>
+                <Text>
+                    See Result!
+                </Text>
             </Button>
         </ScrollView>
         );

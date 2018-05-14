@@ -20,6 +20,13 @@ class Answers extends Component{
             number:0,
             radius:0,
             select:'',
+            chosen_op1:1,
+            chosen_op2:1,
+            chosen_op3:1,
+            chosen_op4:1,
+
+
+
 
         }
     }
@@ -28,6 +35,7 @@ class Answers extends Component{
 
         if (this.state.number < 4){
             this.setState({number: this.state.number+1});
+            this.setState({chosen_op1:1, chosen_op2:1 , chosen_op3:1, chosen_op4:1});
             this.componentWillMount();
         } else if (this.state.number == 4){
             AlertIOS.alert("Survey Completed",null,[{text:'Go to profile', onPress:()=>this.props.navigation.navigate('Profile')},])
@@ -36,12 +44,18 @@ class Answers extends Component{
 
 
 
-    blur(value){
-        this.setState({radius:1, select:value})
-    }
+
 
     fetchData = async(selected)=>{
-
+        if(selected == 1){
+            this.setState({chosen_op1:0.3})
+        } else if(selected == 2){
+            this.setState({chosen_op2:0.3})
+        } else if(selected == 3){
+            this.setState({chosen_op3:0.3})
+        } else if(selected == 4){
+            this.setState({chosen_op4:0.3})
+        }
         const data = new FormData();
         data.append("question", this.state.id);
         data.append("user", 1);
@@ -54,12 +68,15 @@ class Answers extends Component{
             },
             body: data
         }).then(res => res.json());
+
     };
 
 
     _handleDone(value){
+
         this.fetchData(value);
         const { navigate } = this.props.navigation;
+
         return navigate('Profile');
     }
 
@@ -105,9 +122,6 @@ class Answers extends Component{
     }
 
 
-
-
-
     render(){
 
 
@@ -120,11 +134,13 @@ class Answers extends Component{
                         <View style={{flexDirection:'row'}}>
 
                             <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(1)}>
-                                <Image blurRadius={this.state.radius} style={styles.image} source={{uri:this.state.choice_1_uri.replace("http","https")}}/>
+                                <Image style={{opacity:this.state.chosen_op1,  height:170,
+                                    width:130,}} source={{uri:this.state.choice_1_uri.replace("http","https")}}/>
                             </TouchableHighlight>
 
                             <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(2)}>
-                                <Image style={styles.image} source={{uri:this.state.choice_2_uri.replace("http","https")}}/>
+                                <Image style={{opacity:this.state.chosen_op2,  height:170,
+                                    width:130,}} source={{uri:this.state.choice_2_uri.replace("http","https")}}/>
                             </TouchableHighlight>
 
                         </View>
@@ -132,11 +148,13 @@ class Answers extends Component{
                         <View style={{flexDirection:'row'}}>
 
                             <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(3)}>
-                                <Image style={styles.image} source={{uri:this.state.choice_3_uri.replace("http","https")}}/>
+                                <Image style={{opacity:this.state.chosen_op3,  height:170,
+                                    width:130,}} source={{uri:this.state.choice_3_uri.replace("http","https")}}/>
                             </TouchableHighlight>
 
                             <TouchableHighlight style={styles.highlight} onPress={()=> this.fetchData(4)}>
-                                <Image style={styles.image} source={{uri:this.state.choice_4_uri.replace("http","https")}}/>
+                                <Image style={{opacity:this.state.chosen_op4,  height:170,
+                                    width:130,}} source={{uri:this.state.choice_4_uri.replace("http","https")}}/>
                             </TouchableHighlight>
 
                         </View>
@@ -193,10 +211,7 @@ const styles =StyleSheet.create(
             alignItems: 'center',
             backgroundColor:'transparent',
         },
-        image:{
-            height:170,
-            width:130
-        },
+
         highlight:{
             margin:20,
 

@@ -4,26 +4,51 @@ import SwipeCards from 'react-native-swipe-cards';
 import Card from "./Card";
 import NoMoreCards from "./NoMoreCards";
 
-const cards = [
-    {name: '1', image: 'https://looktheapp.com/media/72._mg_6801_900x.jpg'},
-    {name: '2', image: 'https://looktheapp.com/media/46._8ec2c1bf34eb942c8509910a3ab5c137.jpg'},
-    {name: '3', image: 'https://looktheapp.com/media/44._set-3162rm8c-10885530-eggplant.jpg'},
-];
-
-const cards2 = [
-    {name: '3', image: 'https://looktheapp.com/media/44._set-3162rm8c-10885530-eggplant.jpg'},
-];
 
 
  class Suggest extends Component{
 
      constructor(props) {
          super(props);
+         const { params } = this.props.navigation.state;
+         const my_name = params ? params.event_n : null;
          this.state = {
-             cards: cards,
+             event:my_name,
+             cards: [],
              outOfCards: false
          }
      }
+
+
+
+     componentWillMount(){
+         this.getData()
+             .then((data) => {
+                 this.setState({
+                     cards:data
+                 });
+             }).catch((error)=>{
+             console.log("Api call error");
+             alert(error.message);
+         });
+
+     }
+
+
+     async getData() {
+         const response = await fetch('https://looktheapp.com/suggestion/images/?event_type='+this.state.event+'&count=5', {
+             method: 'GET',
+             headers: {
+                 Accept: 'application/json',
+                 'Content-Type': 'application/json',
+             }
+         }).catch(function(error) {
+             throw error
+         });
+         const json = await response.json();
+         return json;
+     }
+
 
      handleYup (card) {
          console.log("yup");
@@ -43,7 +68,6 @@ const cards2 = [
              if (!this.state.outOfCards) {
 
                  this.setState({
-                     cards: this.state.cards.concat(cards2),
                      outOfCards: true
                  })
              }
@@ -67,7 +91,7 @@ const cards2 = [
                 cards={this.state.cards}
                 loop={false}
 
-                renderCard={(cardData) => <Card {...cardData} />}
+                renderCard={(cardData) => <Card image={cardData} />}
                 renderNoMoreCards={() => <NoMoreCards />}
                 showYup={true}
                 showNope={true}
@@ -86,9 +110,9 @@ const cards2 = [
  const styles = StyleSheet.create({
      title:{
          alignSelf:'center',
-         marginTop:30,
+         marginTop:50,
          color:"#ffffff",
-         fontSize:15
+         fontSize:20
      }
  });
 

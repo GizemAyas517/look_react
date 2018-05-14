@@ -18,12 +18,18 @@ import DisplayImage from "./screens/DisplayImage";
 import Wardrobe from "./screens/Wardrobe";
 import SuggestEventName from "./screens/SuggestEventName";
 import Suggest from "./screens/Suggest";
+import LoginScreen from "./screens/LoginScreen";
+import Tutorial from "./screens/Tutorial";
+import ValidateRequest from "./screens/ValidateRequest";
 
 
 const RootStack = StackNavigator(
     {
         Home: {
-            screen: Survey,
+            screen: LoginScreen,
+        },
+        Tutorial:{
+            screen: Tutorial,
         },
         Profile: {
             screen: Profile,
@@ -51,10 +57,16 @@ const RootStack = StackNavigator(
         },
         Suggest:{
             screen: Suggest,
+        },
+        ValidateAnswer:{
+            screen:ValidateRequest,
+        },
+        Survey:{
+            screen:Survey,
         }
     },
     {
-        initialRouteName: 'Profile',
+        initialRouteName: 'Home',
         headerMode: 'none',
         navigationOptions: {
             headerVisible: false,
@@ -83,10 +95,3 @@ export default class App extends Component {
 
 }
 
-const styles= StyleSheet.create(
-    {
-        container:{
-
-        }
-    }
-);

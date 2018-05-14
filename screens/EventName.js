@@ -3,7 +3,7 @@ import {Image, ImageBackground, Picker, StyleSheet, View} from 'react-native'
 import {Button, Form, Input, Item, Label, Text} from "native-base";
 import AnimatedLinearGradient from "react-native-animated-linear-gradient";
 import ModalDropdown from "react-native-modal-dropdown";
-
+import { YellowBox } from 'react-native';
 const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
 
 class EventName extends Component{
@@ -13,7 +13,13 @@ class EventName extends Component{
         this.state={
             options:[],
             chosen: '',
-        }
+        };
+
+
+
+        console.disableYellowBox = true;
+
+
     }
 
 
@@ -22,17 +28,16 @@ class EventName extends Component{
     componentWillMount(){
         this.getoptions()
             .then((data) => {
-            for (let i=0; i<data.count; i++ ){
-                let joined = this.state.options.concat(data.results[i].name);
-                this.setState({options: joined});
+                for (let i=0; i<data.count; i++ ){
+                    let joined = this.state.options.concat(data.results[i].name);
+                    this.setState({options: joined});
 
-            }
+                }
 
-        }).catch((error)=>{
+            }).catch((error)=>{
             console.log("Api call error");
             alert(error.message);
         });
-
     }
 
     async getoptions() {
@@ -54,13 +59,6 @@ class EventName extends Component{
     };
 
 
-    /*
-
-
-
-     */
-
-
 
     render(){
         return (
@@ -75,7 +73,7 @@ class EventName extends Component{
 
                     <Image style={styles.icon} source={require('./invitation.png')} />
                     <Text style={styles.title}>Please pick a event type</Text>
-                    <Picker selectedValue = {this.state.user} onValueChange = {this.updateUser}>
+                    <Picker selectedValue = {this.state.chosen} onValueChange = {this.updateUser}>
                         {this.state.options.map((i,index) =>
                                     (<Picker.Item key={index} label={i} value={i} />)
                         )}
