@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Image, ScrollView, View} from "react-native";
+import {Image, ImageBackground, ScrollView, View} from "react-native";
 import {Button, Text} from "native-base";
 
 
@@ -18,7 +18,10 @@ class DisplayImage extends Component{
             event_name:event,
             outfit:my_image,
             image_count:0,
-        }
+        };
+
+
+
 
     }
 
@@ -31,47 +34,66 @@ class DisplayImage extends Component{
     fetchData = async()=>{
         // JSON = integer | string | boolean | list(json)  | {key, value set} for key string, value: JSON
 
-
-            this.setState({image_count: this.state.image_count + 1});
-
-
-            const data = new FormData();
-            data.append("feedback", true);
-            data.append("event_date", "2018-04-07T12:12:00Z");
-            data.append("event_type", 1);
-            data.append("user", 1);
-            data.append('outfit_image', {
-                uri: this.state.outfit.uri,
-                type: 'image/jpeg',
-                name: this.generate_picture_id() + "_" + ".jpg"
-            });
+        this.setState({image_count: this.state.image_count + 1});
 
 
-            let x = await fetch('https://looktheapp.com/validations/', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: data
-            }).then(res => res.json());
+        const data = new FormData();
+        data.append("feedback", true);
+        data.append("event_date", "2018-04-07T12:12:00Z");
+        data.append("event_type", 1);
+        data.append("user", 1);
+        data.append('outfit_image', {
+            uri: this.state.outfit.uri,
+            type: 'image/jpeg',
+            name: this.generate_picture_id() + "_" + ".jpg"
+        });
+
+
+
+
+        let x = await fetch('https://looktheapp.com/validations/', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: data
+        }).then(res => res.json()).then(() => this.props.navigation.navigate('ValidateAnswer'));
+
+
+
+
+
 
 
 
     };
+
+
+    _goBack(){
+        this.props.navigation.navigate('ImagePicker',{event_n:this.state.event_name, eventD:this.state.event_date});
+    }
+
     render(){
 
         return(
-        <ScrollView>
-            <Image style={{width:400, height:600}} source={{uri:this.state.outfit.uri}}/>
-            <Button onPress={()=>this.fetchData()}>
-                <Text>Send outfit to look</Text>
+            <ImageBackground
+                style={{
+                    flex: 1,
+                    alignSelf: 'stretch',
+                    width: null,
+
+                }}
+                source={require('./backgroundvalidate.png')}>
+
+            <Image style={{width:250, height:300, alignSelf:'center', marginTop:100}} source={{uri:this.state.outfit.uri}}/>
+            <Button onPress={() => this.fetchData()}>
+                <Text>Send to Look</Text>
             </Button>
-            <Button onPress={() => this.props.navigation.navigate("ValidateAnswer", {event_n:this.state.event_name})}>
-                <Text>
-                    See Result!
-                </Text>
+
+            <Button onPress={() => this._goBack()}>
+                <Text>Change the picture</Text>
             </Button>
-        </ScrollView>
+        </ImageBackground>
         );
     }
 

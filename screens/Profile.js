@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
-import {FlatList, Image, ImageBackground, StyleSheet, View} from 'react-native'
+import {FlatList, Image, ImageBackground, StyleSheet, View, Dimensions} from 'react-native'
 import MyFooterTab from "./MyFooterTab";
 import {Body, Button, Card, CardItem, Container, Content, List, Text, Thumbnail} from "native-base";
 import ProfileCard from "./ProfileCard";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 class Profile extends Component{
 
@@ -15,22 +17,21 @@ class Profile extends Component{
     }
 
 
-
     render(){
 
         return(
-        <ImageBackground style={{
-            flex: 1,
-            alignSelf: 'stretch',
-            width: null,
+            <ImageBackground
+                style={{
+                    flex: 1,
+                    alignSelf: 'stretch',
+                    width:null
 
-        }}
-               source={require('./background.png')}>
-
+                }}
+                source={require('./wallback.png')}>
             <Container style={styles.container}>
                 <Content style={styles.content}>
                     <ProfileCard/>
-                    <Button style={styles.button} onPress={()=>this.props.navigation.navigate('Survey')}>
+                    <Button style={styles.button} onPress={() => this.props.navigation.navigate('Survey')}>
                         <Text style={{color:"#000000"}}>
                             Take the survey
                         </Text>

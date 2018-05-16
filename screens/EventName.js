@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
 import {Image, ImageBackground, Picker, StyleSheet, View} from 'react-native'
 import {Button, Form, Input, Item, Label, Text} from "native-base";
-import AnimatedLinearGradient from "react-native-animated-linear-gradient";
-import ModalDropdown from "react-native-modal-dropdown";
+
 import { YellowBox } from 'react-native';
-const myColors= ['rgb(255,255,255)', 'rgb(132,143,165)'];
 
 class EventName extends Component{
 
@@ -14,10 +12,6 @@ class EventName extends Component{
             options:[],
             chosen: '',
         };
-
-
-
-        console.disableYellowBox = true;
 
 
     }

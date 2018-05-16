@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
-import {View} from "react-native";
+import {ImageBackground, View} from "react-native";
 import {Button, Text} from "native-base";
+import Feedback from "./Feedback";
+import Congrats from "./Congrats";
+import Wrong from "./Wrong";
 
 
 class ValidateRequest extends Component{
@@ -17,9 +20,9 @@ class ValidateRequest extends Component{
 
     getAnswer(){
         if(this.state.answer == "true"){
-            return <Text> You got it right!</Text>
+            return <Congrats/>;
         } else{
-            return <Text>You got it wrong!</Text>
+            return <Wrong/>
         }
 
     }
@@ -53,10 +56,19 @@ class ValidateRequest extends Component{
 
     render(){
         return(
-            <View>
-                {this.getAnswer()}
+            <ImageBackground
+                style={{
+                    flex: 1,
+                    alignSelf: 'stretch',
+                    width: null,
 
-            </View>
+                }}
+                source={require('./backgroundvalidate.png')}>
+
+                {this.getAnswer()}
+                <Feedback navigation={this.props.navigation}/>
+
+            </ImageBackground>
         );
 
 
