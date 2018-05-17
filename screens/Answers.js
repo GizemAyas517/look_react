@@ -32,6 +32,7 @@ class Answers extends Component{
     }
 
     handleQuestion = () => {
+        this.highlight(0);
 
         if (this.state.number < 4){
             this.setState({number: this.state.number+1});
@@ -44,18 +45,8 @@ class Answers extends Component{
 
 
 
-
-
     fetchData = async(selected)=>{
-        if(selected == 1){
-            this.setState({chosen_op1:0.3})
-        } else if(selected == 2){
-            this.setState({chosen_op2:0.3})
-        } else if(selected == 3){
-            this.setState({chosen_op3:0.3})
-        } else if(selected == 4){
-            this.setState({chosen_op4:0.3})
-        }
+        this.highlight(selected);
         const data = new FormData();
         data.append("question", this.state.id);
         data.append("user", 1);
@@ -70,6 +61,18 @@ class Answers extends Component{
         }).then(res => res.json());
 
     };
+
+    highlight(selected) {
+        let state = {
+            chosen_op0: 1,
+            chosen_op1: 1,
+            chosen_op2: 1,
+            chosen_op3: 1,
+            chosen_op4: 1
+        }
+        state["chosen_op" + selected] = 0.3;
+        this.setState(state);
+    }
 
 
     _handleDone(value){

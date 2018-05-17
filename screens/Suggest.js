@@ -36,7 +36,8 @@ import NoMoreCards from "./NoMoreCards";
 
 
      async getData() {
-         const response = await fetch('https://looktheapp.com/suggestion/images/?event_type='+this.state.event+'&count=5', {
+         let event = this.state.event.toLowerCase().replace(" ", "-");
+         const response = await fetch('https://looktheapp.com/suggestion/images/?event_type='+ event+'&count=5', {
              method: 'GET',
              headers: {
                  Accept: 'application/json',
@@ -91,7 +92,7 @@ import NoMoreCards from "./NoMoreCards";
                 cards={this.state.cards}
                 loop={false}
 
-                renderCard={(cardData) => <Card image={cardData} />}
+                renderCard={(cardData) => <Card image={cardData.url} />}
                 renderNoMoreCards={() => <NoMoreCards />}
                 showYup={true}
                 showNope={true}

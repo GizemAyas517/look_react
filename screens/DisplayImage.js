@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Image, ImageBackground, ScrollView, View} from "react-native";
 import {Button, Text} from "native-base";
 
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 class DisplayImage extends Component{
@@ -14,6 +15,7 @@ class DisplayImage extends Component{
         const date = params ? params.my_date : null;
 
         this.state={
+            visible: false,
             event_date:date,
             event_name:event,
             outfit:my_image,
@@ -34,13 +36,16 @@ class DisplayImage extends Component{
     fetchData = async()=>{
         // JSON = integer | string | boolean | list(json)  | {key, value set} for key string, value: JSON
 
-        this.setState({image_count: this.state.image_count + 1});
+        await  this.setState({
+            image_count: this.state.image_count + 1,
+            visible: true
+        });
 
 
         const data = new FormData();
         data.append("feedback", true);
         data.append("event_date", "2018-04-07T12:12:00Z");
-        data.append("event_type", 1);
+        data.append("event_type", 8);
         data.append("user", 1);
         data.append('outfit_image', {
             uri: this.state.outfit.uri,
@@ -48,7 +53,7 @@ class DisplayImage extends Component{
             name: this.generate_picture_id() + "_" + ".jpg"
         });
 
-
+        console.warn(this.state.event_name);
 
 
         let x = await fetch('https://looktheapp.com/validations/', {
@@ -57,14 +62,14 @@ class DisplayImage extends Component{
                 "Content-Type": 'application/json',
             },
             body: data
-        }).then(res => res.json()).then(() => this.props.navigation.navigate('ValidateAnswer'));
+        }).then(res => res.json());
+
+        await this.setState({
+            visible: false
+        });
 
 
-
-
-
-
-
+        this.props.navigation.navigate('ValidateAnswer');
 
     };
 
@@ -76,24 +81,28 @@ class DisplayImage extends Component{
     render(){
 
         return(
-            <ImageBackground
-                style={{
-                    flex: 1,
-                    alignSelf: 'stretch',
-                    width: null,
+            [
 
-                }}
-                source={require('./backgroundvalidate.png')}>
+                    <Spinner visible={this.state.visible} textContent={"Loading..."} textStyle={{color: '#FFF'}} />,
+                <ImageBackground
+                    style={{
+                        flex: 1,
+                        alignSelf: 'stretch',
+                        width: null,
 
-            <Image style={{width:250, height:300, alignSelf:'center', marginTop:100}} source={{uri:this.state.outfit.uri}}/>
-            <Button onPress={() => this.fetchData()}>
-                <Text>Send to Look</Text>
-            </Button>
+                    }}
+                    source={require('./backgroundvalidate.png')}>
 
-            <Button onPress={() => this._goBack()}>
-                <Text>Change the picture</Text>
-            </Button>
-        </ImageBackground>
+                    <Image style={{width:250, height:300, alignSelf:'center', marginTop:100}} source={{uri:this.state.outfit.uri}}/>
+                    <Button onPress={() => this.fetchData()}>
+                        <Text>Send to Look</Text>
+                    </Button>
+                    <Button onPress={() => this._goBack()}>
+                        <Text>Change the picture</Text>
+                    </Button>
+                </ImageBackground>
+            ]
+
         );
     }
 
